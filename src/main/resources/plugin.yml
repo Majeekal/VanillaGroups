@@ -1,0 +1,18 @@
+name: VanillaGroups
+main: com.sbezboro.standardgroups.VanillaGroups
+version: 1.6.11
+depend: [VanillaPlugin]
+api-version: 1.16
+
+commands:
+    groups:
+        description: Base command
+        permission: vanillagroups.groups
+        permission-message: You don't have permission
+        aliases: [g]
+
+permissions:
+    vanillagroups.groups:
+        default: true
+    vanillagroups.groups.admin:
+        default: op
