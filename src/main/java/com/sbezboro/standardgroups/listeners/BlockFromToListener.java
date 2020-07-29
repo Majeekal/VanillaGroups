@@ -23,7 +23,7 @@ public class BlockFromToListener extends SubPluginEventListener<VanillaGroups> i
             Group from = groupManager.getGroupByLocation(event.getBlock().getLocation());
             Group to = groupManager.getGroupByLocation(event.getToBlock().getLocation());
 
-            if(from == null && to != null){
+            if((from == null || to != null && from != to) && to != null){
                 event.setCancelled(true);
             }
         }
