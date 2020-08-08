@@ -67,7 +67,7 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 		} else {
 			String identifier = groupManager.getGroupIdentifier(player);
 			if (chatPlayerGroup != null) {
-				identifier += "[" + chatPlayerGroup.getName() + "] ";
+				identifier += "[" + chatPlayerGroup.getName() + "]";
 			}
 
 			format = format.replace("[GROUP]", identifier);
@@ -80,12 +80,10 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 				String playerFormat = format;
 				Group onlinePlayerGroup = groupManager.getPlayerGroup(onlinePlayer);
 
-				if (onlinePlayerGroup != null &&
-						onlinePlayerGroup == chatPlayerGroup) {
+				if (onlinePlayerGroup != null && onlinePlayerGroup == chatPlayerGroup) {
 					playerFormat = playerFormat.replace("[", String.valueOf(ChatColor.GREEN) + "[");
 				} else if (onlinePlayerGroup != null &&
-						chatPlayerGroup != null &&
-						onlinePlayerGroup.isMutualFriendship(chatPlayerGroup)) {
+						chatPlayerGroup != null && onlinePlayerGroup.isMutualFriendship(chatPlayerGroup)) {
 					playerFormat = playerFormat.replace("[", String.valueOf(ChatColor.DARK_AQUA) + "[");
 				} else {
 					playerFormat = playerFormat.replace("[", String.valueOf(ChatColor.YELLOW) + "[");

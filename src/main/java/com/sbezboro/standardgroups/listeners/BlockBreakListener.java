@@ -182,8 +182,8 @@ public class BlockBreakListener extends SubPluginEventListener<VanillaGroups> im
 				event.setCancelled(true);
 				if (victimGroup.isSafeArea()) {
 					player.sendMessage(ChatColor.RED + "Cannot break blocks in the safe area");
-				} else if (victimGroup.isNeutralArea()) {
-					player.sendMessage(ChatColor.RED + "Cannot break blocks in the neutral area");
+				} else if (victimGroup.isWarArea()) {
+					player.sendMessage(ChatColor.RED + "Cannot break blocks in the war area");
 				} else {
 					player.sendMessage(ChatColor.RED + "Cannot break blocks in the territory of " + victimGroup.getName());
 				}

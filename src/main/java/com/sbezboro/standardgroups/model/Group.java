@@ -18,7 +18,7 @@ import java.util.*;
 
 public class Group extends PersistedObject implements Comparable<Group> {
 	public static final String SAFE_AREA = "safearea";
-	public static final String NEUTRAL_AREA = "neutralarea";
+	public static final String WAR_AREA = "wararea";
 
 	private PersistedListProperty<String> memberUuids;
 	private PersistedListProperty<String> moderatorUuids;
@@ -172,8 +172,9 @@ public class Group extends PersistedObject implements Comparable<Group> {
 		return getName().equals(Group.SAFE_AREA);
 	}
 
-	public boolean isNeutralArea() {
-		return getName().equals(Group.NEUTRAL_AREA);
+	public boolean isWarArea() {
+
+		return getName().equals(Group.WAR_AREA);
 	}
 	
 	public void addMember(StandardPlayer player) {
@@ -446,7 +447,7 @@ public class Group extends PersistedObject implements Comparable<Group> {
 	}
 
 	public int getMaxClaims() {
-		if (isSafeArea() || isNeutralArea()) {
+		if (isSafeArea() || isWarArea()) {
 			return 999999;
 		}
 		return maxClaims.getValue();

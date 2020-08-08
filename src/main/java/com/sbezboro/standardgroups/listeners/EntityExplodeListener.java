@@ -27,7 +27,7 @@ public class EntityExplodeListener extends SubPluginEventListener<VanillaGroups>
 			Group group = groupManager.getGroupByLocation(block.getLocation());
 
 			if (group != null) {
-				if (group.isSafeArea() || group.isNeutralArea()) {
+				if (group.isSafeArea() || group.isWarArea()) {
 					event.setCancelled(true);
 					return;
 				}

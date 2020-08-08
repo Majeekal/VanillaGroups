@@ -37,20 +37,20 @@ public class PlayerMoveListener extends SubPluginEventListener<VanillaGroups> im
 				Group playerGroup = groupManager.getPlayerGroup(player);
 				
 				if (toGroup == null) {
-					player.sendMessage(String.valueOf(ChatColor.GREEN) + ChatColor.BOLD + "Entering unclaimed wilderness");
+					player.sendTitleMessage(ChatColor.GREEN + "Wilderness");
 				} else if (toGroup.isSafeArea()) {
-					player.sendMessage(String.valueOf(ChatColor.DARK_GREEN) + ChatColor.BOLD + "Entering the safe area");
+					player.sendTitleMessage(ChatColor.GREEN + "Safezone");
 					if (player.isInPvp()) {
 						player.sendMessage(String.valueOf(ChatColor.RED) + ChatColor.BOLD + "You are still vulnerable to PVP");
 					}
-				} else if (toGroup.isNeutralArea()) {
-					player.sendMessage(String.valueOf(ChatColor.GOLD) + ChatColor.BOLD + "Entering the neutral area");
+				} else if (toGroup.isWarArea()) {
+					player.sendTitleMessage(ChatColor.DARK_RED + "Warzone");
 				} else if (toGroup == playerGroup) {
-					player.sendMessage(String.valueOf(ChatColor.YELLOW) + ChatColor.BOLD + "Entering the territory of your group " + ChatColor.GREEN + ChatColor.BOLD + toGroup.getName());
+					player.sendTitleMessage(ChatColor.GREEN + toGroup.getName());
 				} else if (playerGroup != null && toGroup.isMutualFriendship(playerGroup)) {
-					player.sendMessage(String.valueOf(ChatColor.YELLOW) + ChatColor.BOLD + "Entering the territory of " + ChatColor.DARK_AQUA + ChatColor.BOLD + toGroup.getName());
+					player.sendTitleMessage(ChatColor.DARK_AQUA + toGroup.getName());
 				} else {
-					player.sendMessage(String.valueOf(ChatColor.YELLOW) + ChatColor.BOLD + "Entering the territory of " + toGroup.getName());
+					player.sendTitleMessage(ChatColor.YELLOW + toGroup.getName());
 				}
 			}
 

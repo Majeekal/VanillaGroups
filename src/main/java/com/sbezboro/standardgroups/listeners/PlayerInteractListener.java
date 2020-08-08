@@ -162,8 +162,8 @@ public class PlayerInteractListener extends SubPluginEventListener<VanillaGroups
 		Group group = groupManager.getGroupByLocation(location);
 
 		if (group != null) {
-			// Allow special block use in safe or neutral area
-			if ((group.isSafeArea() || group.isNeutralArea()) &&
+			// Allow special block use in safe or war area
+			if ((group.isSafeArea() || group.isWarArea()) &&
 					groupManager.isWhitelistedSafeareaBlock(location.getBlock())) {
 				return;
 			}

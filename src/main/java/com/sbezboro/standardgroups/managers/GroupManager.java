@@ -282,14 +282,14 @@ public class GroupManager extends BaseManager {
 		return getGroupByName(Group.SAFE_AREA);
 	}
 
-	public Group getNeutralArea() {
-		return getGroupByName(Group.NEUTRAL_AREA);
+	public Group getWarArea() {
+		return getGroupByName(Group.WAR_AREA);
 	}
 
 	public List<Group> getGroups() {
 		List<Group> groups = storage.getGroups();
 		groups.remove(getSafeArea());
-		groups.remove(getNeutralArea());
+		groups.remove(getWarArea());
 		return groups;
 	}
 
@@ -948,8 +948,8 @@ public class GroupManager extends BaseManager {
 			if (isGroupsAdmin(player)) {
 				if (groupName.equalsIgnoreCase(Group.SAFE_AREA)) {
 					group = getSafeArea();
-				} else if (groupName.equalsIgnoreCase(Group.NEUTRAL_AREA)) {
-					group = getNeutralArea();
+				} else if (groupName.equalsIgnoreCase(Group.WAR_AREA)) {
+					group = getWarArea();
 				} else {
 					group = matchGroup(groupName);
 				}
@@ -1101,7 +1101,7 @@ public class GroupManager extends BaseManager {
 		group.recalculateSpawnClaims();
 	}
 
-	// Checks whether loc is in a chunk directly next to safe / neutral area. Cornering does not count
+	// Checks whether loc is in a chunk directly next to safe / war area. Cornering does not count
 	public boolean isNextToSpawn(Location loc) {
 		Location location = new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 
@@ -1113,7 +1113,7 @@ public class GroupManager extends BaseManager {
 		for (int i = 0; i <= 3; i++) {
 			locationGroup = getGroupByLocation(location);
 
-			if (locationGroup != null && (locationGroup.isSafeArea() || locationGroup.isNeutralArea())) {
+			if (locationGroup != null && (locationGroup.isSafeArea() || locationGroup.isWarArea())) {
 				return true;
 			}
 
@@ -1261,7 +1261,6 @@ public class GroupManager extends BaseManager {
 		sender.sendMessage(ChatColor.YELLOW + "Friends: " + ChatColor.RESET + StringUtils.join(friendlyGroupsNames, ChatColor.RESET + ", "));
 		sender.sendMessage(ChatColor.YELLOW + "Online members: " + ChatColor.RESET + StringUtils.join(onlineMembers, ChatColor.RESET + ", "));
 		sender.sendMessage(ChatColor.YELLOW + "Offline members: " + ChatColor.RESET + StringUtils.join(offlineMembers, ChatColor.RESET + ", "));
-		sender.sendMessage(ChatColor.YELLOW + "Link: " + ChatColor.RESET + "standardsurvival.com/group/" + group.getName());
 	}
 
 	// Displays the power of a group
@@ -1385,7 +1384,7 @@ public class GroupManager extends BaseManager {
 		List<Lock> locks = getLocksAffectedByBlock(group, location);
 
 		if (!locks.isEmpty()) {
-			player.sendMessage(ChatColor.YELLOW + "A lock already exists on this block.");
+			player.sendTitleMessage(ChatColor.YELLOW + "A lock already exists on this block.");
 			return;
 		}
 

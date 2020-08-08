@@ -26,7 +26,7 @@ public class EntityBlockFormListener extends SubPluginEventListener<VanillaGroup
 				event.getNewState().getType() == Material.SNOW) {
 			Group group = subPlugin.getGroupManager().getGroupByLocation(entity.getLocation());
 
-			if (group != null && (group.isSafeArea() || group.isNeutralArea())) {
+			if (group != null && (group.isSafeArea() || group.isWarArea())) {
 				event.setCancelled(true);
 			}
 		}

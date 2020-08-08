@@ -20,15 +20,15 @@ public class MapManager extends BaseManager {
 
 
     private static final byte[][] MAP_PATTERN = {
-            new byte[] {0, 1, 0, 2, 0, 2, 0, 2, 0},
-            new byte[] {1, 0, 1, 0, 2, 0, 2, 0, 2},
-            new byte[] {0, 1, 0, 1, 0, 2, 0, 2, 0},
-            new byte[] {2, 0, 1, 0, 1, 0, 2, 0, 2},
-            new byte[] {0, 2, 0, 1, 3, 1, 0, 1, 0},
-            new byte[] {2, 0, 2, 0, 1, 0, 1, 0, 1},
-            new byte[] {0, 2, 0, 2, 0, 1, 0, 1, 0},
-            new byte[] {2, 0, 2, 0, 2, 0, 1, 0, 1},
-            new byte[] {0, 2, 0, 2, 0, 2, 0, 1, 0}
+            new byte[] {0, 1, 0, 2, 0, 2, 0, 2, 0, 2},
+            new byte[] {1, 0, 1, 0, 2, 0, 2, 0, 2, 0},
+            new byte[] {0, 1, 0, 1, 0, 2, 0, 2, 0, 1},
+            new byte[] {2, 0, 1, 0, 1, 0, 2, 0, 2, 0},
+            new byte[] {0, 2, 0, 1, 3, 1, 0, 1, 0, 1},
+            new byte[] {2, 0, 2, 0, 1, 0, 1, 0, 1, 0},
+            new byte[] {0, 2, 0, 2, 0, 1, 0, 1, 0, 2},
+            new byte[] {2, 0, 2, 0, 2, 0, 1, 0, 1, 0},
+            new byte[] {0, 2, 0, 2, 0, 2, 0, 1, 0, 2}
     };
 
     private VanillaGroups subPlugin;
@@ -356,13 +356,13 @@ public class MapManager extends BaseManager {
                 if (group == null) {
                     chars[x] = ChatColor.GRAY + chars[x];
                 } else if (group == playerGroup) {
-                    chars[x] = ChatColor.GREEN + chars[x];
+                    chars[x] = ChatColor.DARK_AQUA + chars[x];
                 } else if (playerGroup != null && group.isMutualFriendship(playerGroup)) {
                     chars[x] = ChatColor.DARK_AQUA + chars[x];
                 } else if (group.isSafeArea()) {
-                    chars[x] = ChatColor.DARK_GREEN + chars[x];
-                } else if (group.isNeutralArea()) {
-                    chars[x] = ChatColor.GOLD + chars[x];
+                    chars[x] = ChatColor.GREEN + chars[x];
+                } else if (group.isWarArea()) {
+                    chars[x] = ChatColor.RED + chars[x];
                 } else {
                     chars[x] = ChatColor.YELLOW + chars[x];
                 }

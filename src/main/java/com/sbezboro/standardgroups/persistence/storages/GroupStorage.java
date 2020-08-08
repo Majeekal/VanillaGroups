@@ -26,7 +26,7 @@ public class GroupStorage extends MultiFileStorage<Group> {
 
 		Map<String, Group> defaults = new HashMap<String, Group>();
 		defaults.put(Group.SAFE_AREA, new Group(this, Group.SAFE_AREA));
-		defaults.put(Group.NEUTRAL_AREA, new Group(this, Group.NEUTRAL_AREA));
+		defaults.put(Group.WAR_AREA, new Group(this, Group.WAR_AREA));
 
 		for (Group group : defaults.values()) {
 			if (getObject(group.getIdentifier()) == null) {
