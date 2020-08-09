@@ -52,7 +52,7 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 			Bukkit.getConsoleSender().sendMessage(String.format(
 					format.replace("(To friends)", "(To friends of " + chatPlayerGroup.getName() + ")"),
 					EssentialsIntegration.getNickname(player), message));
-	
+
 			for (StandardPlayer otherPlayer : chatPlayerGroup.getPlayers()) {
 				if (otherPlayer.isOnline()) {
 					otherPlayer.sendMessage(String.format(format, EssentialsIntegration.getNickname(player), message));
@@ -67,30 +67,29 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 			}
 		} else {
 			String identifier = groupManager.getGroupIdentifier(player);
+
 			if (chatPlayerGroup != null) {
-				identifier += "[" + chatPlayerGroup.getName() + "]";
+				identifier += "[" + chatPlayerGroup.getName() + "]" + ChatColor.RESET;
 			}
 
 			format = format.replace("[GROUP]", identifier);
 
-			Bukkit.getConsoleSender().sendMessage(String.format(format, EssentialsIntegration.getNickname(player), message));
+			Bukkit.getConsoleSender().sendMessage(String.format(format, EssentialsIntegration.getNickname(player) + ChatColor.RESET, message));
 
 			for (Player recipient : event.getRecipients()) {
 				StandardPlayer onlinePlayer = plugin.getStandardPlayer(recipient);
 
-				String playerFormat = format;
 				Group onlinePlayerGroup = groupManager.getPlayerGroup(onlinePlayer);
 
 				if (onlinePlayerGroup != null && onlinePlayerGroup == chatPlayerGroup) {
-					playerFormat = playerFormat.replace("[", String.valueOf(ChatColor.GREEN) + "[");
-				} else if (onlinePlayerGroup != null &&
-						chatPlayerGroup != null && onlinePlayerGroup.isMutualFriendship(chatPlayerGroup)) {
-					playerFormat = playerFormat.replace("[", String.valueOf(ChatColor.DARK_AQUA) + "[");
+					format = format.replace("[", ChatColor.GREEN + "[");
+				} else if (onlinePlayerGroup != null && chatPlayerGroup != null && onlinePlayerGroup.isMutualFriendship(chatPlayerGroup)) {
+					format = format.replace("[", ChatColor.DARK_AQUA + "[");
 				} else {
-					playerFormat = playerFormat.replace("[", String.valueOf(ChatColor.YELLOW) + "[");
+					format = format.replace("[", ChatColor.YELLOW + "[");
 				}
 
-				onlinePlayer.sendMessage(String.format(playerFormat, EssentialsIntegration.getNickname(player), message));
+				onlinePlayer.sendMessage(String.format(format, EssentialsIntegration.getNickname(player) + ChatColor.RESET, message));
 			}
 		}
 	}
