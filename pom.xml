@@ -71,7 +71,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.sbezboro.vanillaplugin</groupId>
+            <groupId>me.majeek</groupId>
             <artifactId>VanillaPlugin</artifactId>
             <version>1.0</version>
             <scope>system</scope>

@@ -31,6 +31,7 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 
 		String format = event.getFormat();
 		String message = event.getMessage();
+		String nickname = EssentialsIntegration.getNickname(player) == null ? player.getName() : EssentialsIntegration.getNickname(player);
 
 		event.setCancelled(true);
 
@@ -39,7 +40,7 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 
 			Bukkit.getConsoleSender().sendMessage(String.format(
 					format.replace("(To group)", "(To group " + chatPlayerGroup.getName() + ")"),
-					EssentialsIntegration.getNickname(player), message));
+					nickname, message));
 
 			for (StandardPlayer otherPlayer : chatPlayerGroup.getPlayers()) {
 				if (otherPlayer.isOnline()) {
@@ -51,17 +52,17 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 
 			Bukkit.getConsoleSender().sendMessage(String.format(
 					format.replace("(To friends)", "(To friends of " + chatPlayerGroup.getName() + ")"),
-					EssentialsIntegration.getNickname(player), message));
+					nickname, message));
 
 			for (StandardPlayer otherPlayer : chatPlayerGroup.getPlayers()) {
 				if (otherPlayer.isOnline()) {
-					otherPlayer.sendMessage(String.format(format, EssentialsIntegration.getNickname(player), message));
+					otherPlayer.sendMessage(String.format(format, nickname, message));
 				}
 			}
 			for (Group friend : chatPlayerGroup.getMutuallyFriendlyGroups()) {
 				for (StandardPlayer otherPlayer : friend.getPlayers()) {
 					if (otherPlayer.isOnline()) {
-						otherPlayer.sendMessage(String.format(format, EssentialsIntegration.getNickname(player), message));
+						otherPlayer.sendMessage(String.format(format, nickname, message));
 					}
 				}
 			}
@@ -72,9 +73,9 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 				identifier += "[" + chatPlayerGroup.getName() + "]" + ChatColor.RESET;
 			}
 
-			format = format.replace("[GROUP]", identifier);
+			format = format.replace("{GROUP}", identifier);
 
-			Bukkit.getConsoleSender().sendMessage(String.format(format, EssentialsIntegration.getNickname(player) + ChatColor.RESET, message));
+			Bukkit.getConsoleSender().sendMessage(String.format(format, nickname + ChatColor.RESET, message));
 
 			for (Player recipient : event.getRecipients()) {
 				StandardPlayer onlinePlayer = plugin.getStandardPlayer(recipient);
@@ -89,7 +90,7 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 					format = format.replace("[", ChatColor.YELLOW + "[");
 				}
 
-				onlinePlayer.sendMessage(String.format(format, EssentialsIntegration.getNickname(player) + ChatColor.RESET, message));
+				onlinePlayer.sendMessage(String.format(format, nickname + ChatColor.RESET, message));
 			}
 		}
 	}
