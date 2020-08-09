@@ -1363,12 +1363,12 @@ public class GroupManager extends BaseManager {
 		Group group = getPlayerGroup(player);
 
 		if (group == null) {
-			player.sendMessage(ChatColor.RED + "You must be in a group before you can lock things.");
+			player.sendTitleMessage(ChatColor.RED + "Your not in a group.");
 			return;
 		}
 
 		if (!PROTECTED_BLOCKS.contains(block.getType())) {
-			player.sendMessage(ChatColor.RED + "This block isn't lockable.");
+			player.sendTitleMessage(ChatColor.RED + "Unlockable block.");
 			return;
 		}
 
@@ -1377,37 +1377,37 @@ public class GroupManager extends BaseManager {
 		Group testGroup = getGroupByLocation(location);
 
 		if (testGroup != group) {
-			player.sendMessage(ChatColor.RED + "You can only lock things in your group's territory.");
+			player.sendTitleMessage(ChatColor.RED + "Not your territory.");
 			return;
 		}
 
 		List<Lock> locks = getLocksAffectedByBlock(group, location);
 
 		if (!locks.isEmpty()) {
-			player.sendTitleMessage(ChatColor.YELLOW + "A lock already exists on this block.");
+			player.sendTitleMessage(ChatColor.YELLOW + "Lock already exists.");
 			return;
 		}
 
 		if (!group.canLock(location)) {
-			player.sendMessage(ChatColor.RED + "There are too many locks in this claim already.");
+			player.sendTitleMessage(ChatColor.RED + "Too many locks.");
 			return;
 		}
 
 		if (group.getPower() < LOCK_POWER_THRESHOLD) {
-			player.sendMessage(ChatColor.RED + "Your group's power is too low to lock more blocks.");
+			player.sendTitleMessage(ChatColor.RED + "Group power too low.");
 			return;
 		}
 
 		group.lock(player, location);
 
-		player.sendMessage(ChatColor.YELLOW + "You have locked this block for yourself.");
+		player.sendTitleMessage(ChatColor.GREEN + "Block locked.");
 	}
 
 	public void unlock(StandardPlayer player, Block block) {
 		Group group = getPlayerGroup(player);
 
 		if (group == null) {
-			player.sendMessage(ChatColor.RED + "You must be in a group before you can unlock things.");
+			player.sendTitleMessage(ChatColor.RED + "Your not in a group.");
 			return;
 		}
 
@@ -1416,39 +1416,39 @@ public class GroupManager extends BaseManager {
 		Group testGroup = getGroupByLocation(location);
 
 		if (testGroup != group) {
-			player.sendMessage(ChatColor.RED + "You can only unlock things in your group's territory.");
+			player.sendTitleMessage(ChatColor.RED + "Not your territory.");
 			return;
 		}
 
 		if (!PROTECTED_BLOCKS.contains(block.getType())) {
-			player.sendMessage(ChatColor.RED + "This block isn't lockable.");
+			player.sendTitleMessage(ChatColor.RED + "Unlockable block.");
 			return;
 		}
 
 		List<Lock> locks = getLocksAffectedByBlock(group, location);
 
 		if (locks.isEmpty()) {
-			player.sendMessage(ChatColor.YELLOW + "No lock exists on this block.");
+			player.sendTitleMessage(ChatColor.YELLOW + "No lock exists here.");
 			return;
 		}
 
 		Lock lock = locks.get(0);
 
 		if (!lock.isOwner(player)) {
-			player.sendMessage(ChatColor.RED + "You are not the owner of this lock.");
+			player.sendMessage(ChatColor.RED + "Not your lock.");
 			return;
 		}
 
 		group.unlock(lock);
 
-		player.sendMessage(ChatColor.YELLOW + "You have released the lock on this block.");
+		player.sendTitleMessage(ChatColor.YELLOW + "Lock unlocked.");
 	}
 
 	public void addLockMember(StandardPlayer player, Block block, StandardPlayer otherPlayer) {
 		Group group = getPlayerGroup(player);
 
 		if (group == null) {
-			player.sendMessage(ChatColor.RED + "You must be in a group before you can add a member to a lock.");
+			player.sendTitleMessage(ChatColor.RED + "Your not in a group.");
 			return;
 		}
 
@@ -1457,19 +1457,19 @@ public class GroupManager extends BaseManager {
 		List<Lock> locks = getLocksAffectedByBlock(group, location);
 
 		if (locks.isEmpty()) {
-			player.sendMessage(ChatColor.RED + "No lock exists on this block.");
+			player.sendTitleMessage(ChatColor.YELLOW + "No lock exists here.");
 			return;
 		}
 
 		Lock lock = locks.get(0);
 
 		if (!lock.isOwner(player)) {
-			player.sendMessage(ChatColor.RED + "You are not the owner of this lock.");
+			player.sendMessage(ChatColor.RED + "Not your lock.");
 			return;
 		}
 
 		if (lock.hasAccess(otherPlayer)) {
-			player.sendMessage(ChatColor.YELLOW + "That player already has access.");
+			player.sendTitleMessage(ChatColor.YELLOW + "Already has access.");
 			return;
 		}
 
@@ -1492,7 +1492,7 @@ public class GroupManager extends BaseManager {
 		Group group = getPlayerGroup(player);
 
 		if (group == null) {
-			player.sendMessage(ChatColor.RED + "You must be in a group before you can revoke access to locks.");
+			player.sendTitleMessage(ChatColor.RED + "Your not in a group.");
 			return;
 		}
 
@@ -1501,19 +1501,19 @@ public class GroupManager extends BaseManager {
 		List<Lock> locks = getLocksAffectedByBlock(group, location);
 
 		if (locks.isEmpty()) {
-			player.sendMessage(ChatColor.RED + "No lock exists on this block.");
+			player.sendTitleMessage(ChatColor.YELLOW + "No lock exists here.");
 			return;
 		}
 
 		Lock lock = locks.get(0);
 
 		if (!lock.isOwner(player)) {
-			player.sendMessage(ChatColor.RED + "You are not the owner of this lock.");
+			player.sendTitleMessage(ChatColor.RED + "Not your lock.");
 			return;
 		}
 
 		if (!lock.hasAccess(otherPlayer)) {
-			player.sendMessage(ChatColor.YELLOW + "That player already doesn't have access.");
+			player.sendTitleMessage(ChatColor.YELLOW + "Has no access.");
 			return;
 		}
 
