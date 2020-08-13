@@ -44,7 +44,7 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 
 			for (StandardPlayer otherPlayer : chatPlayerGroup.getPlayers()) {
 				if (otherPlayer.isOnline()) {
-					otherPlayer.sendMessage(String.format(format, EssentialsIntegration.getNickname(player), message));
+					otherPlayer.sendMessage(String.format(format, nickname, message));
 				}
 			}
 		} else if (chatPlayerGroup != null && chatPlayerGroup.isFriendChat(player)) {
@@ -71,26 +71,29 @@ public class PlayerChatListener extends SubPluginEventListener<VanillaGroups> im
 
 			if (chatPlayerGroup != null) {
 				identifier += "[" + chatPlayerGroup.getName() + "]" + ChatColor.RESET;
+				format = format.replace("default", identifier);
+			} else {
+				identifier = "";
+				format = format.replace("default ", identifier);
 			}
 
-			format = format.replace("{GROUP}", identifier);
-
-			Bukkit.getConsoleSender().sendMessage(String.format(format, nickname + ChatColor.RESET, message));
+			Bukkit.getConsoleSender().sendMessage(String.format(format, nickname, message));
 
 			for (Player recipient : event.getRecipients()) {
 				StandardPlayer onlinePlayer = plugin.getStandardPlayer(recipient);
 
+				String playerFormat = format;
 				Group onlinePlayerGroup = groupManager.getPlayerGroup(onlinePlayer);
 
 				if (onlinePlayerGroup != null && onlinePlayerGroup == chatPlayerGroup) {
-					format = format.replace("[", ChatColor.GREEN + "[");
+					playerFormat = playerFormat.replace("[", String.valueOf(ChatColor.GREEN) + "[");
 				} else if (onlinePlayerGroup != null && chatPlayerGroup != null && onlinePlayerGroup.isMutualFriendship(chatPlayerGroup)) {
-					format = format.replace("[", ChatColor.DARK_AQUA + "[");
+					playerFormat = playerFormat.replace("[", String.valueOf(ChatColor.DARK_AQUA) + "[");
 				} else {
-					format = format.replace("[", ChatColor.YELLOW + "[");
+					playerFormat = playerFormat.replace("[", String.valueOf(ChatColor.YELLOW) + "[");
 				}
 
-				onlinePlayer.sendMessage(String.format(format, nickname + ChatColor.RESET, message));
+				onlinePlayer.sendMessage(String.format(playerFormat, nickname, message));
 			}
 		}
 	}
